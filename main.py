@@ -25,7 +25,7 @@ WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 CENTER = pygame.Vector2(WINDOW.get_width() / 2, WINDOW.get_height() / 2)
 clock = pygame.time.Clock()
 
-bounceBall = ball(3, CENTER, pygame.Vector2(0, 0), 'bounceBall', 'red')
+bounceBall = ball(10, CENTER, pygame.Vector2(1, 1), 'bounceBall', 'red')
 
 topWall = wall((WINDOW.get_width(), WINDOW.get_height() / 20), (0, 0), 'topWall', 'black')
 bottomWall = wall((WINDOW.get_width(), WINDOW.get_height() / 20), (0, WINDOW.get_height() - (WINDOW.get_height() / 20)), 'bottomWall', 'black')
@@ -35,9 +35,20 @@ objList = [bounceBall, topWall, leftWall, rightWall, bottomWall]
 
 
 def simulation():
-
+    
     for obj in objList:
+
+        otherObj = []
+        for otherObjects in objList:
+            if otherObjects != obj:
+                otherObj.append(otherObjects)
+
+
         try:
+            for otherObjects in otherObj:
+                if obj.rect.colliderect(otherObjects.rect):
+                    obj.velocity = pygame.Vector2(0, 0)
+
             obj.update()
         except:
             continue

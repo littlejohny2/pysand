@@ -16,15 +16,21 @@ class ball():
         self.velocity = velocity
         self.xVel, self.yVel = self.velocity
 
+        self.rect = pygame.Rect(self.xPos, self.yPos, self.radius, self.radius)
+
     def render(self, screen):
         
-        self.draw = pygame.draw.circle(screen, self.color, self.position, self.radius)
+        self.rect = pygame.Rect(self.xPos, self.yPos, self.radius, self.radius)
+        self.draw = pygame.draw.rect(screen, self.color, self.rect)
 
 
     def update(self):
 
         self.position += self.velocity
+        self.xPos, self.yPos = self.position
+
         self.velocity += pygame.Vector2(0, settings.GRAVITY) / settings.MAX_FRAMERATE
+        self.xVel, self.yVel = self.velocity
 
 
 
@@ -40,6 +46,8 @@ class wall():
         
         self.position = position
         self.xPos, self.yPos = self.position
+
+        self.rect = pygame.Rect(self.xPos, self.yPos, self.xSize, self.ySize)
 
     def render(self, screen):
 
